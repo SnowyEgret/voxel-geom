@@ -22,6 +22,11 @@ public class GeomTest {
 	protected double scale = 200;
 	protected double epsilon = .000000001;
 
+	protected Point3d p0 = new Point3d(0,0,0);
+	protected Point3d p1 = new Point3d(1,1,1);
+	protected Point3d p2 = new Point3d(2,2,2);
+	protected Point3d p3 = new Point3d(3,3,3);
+	
 	public Point3d p() {
 		return new Point3d(d(), d(), d());
 	}

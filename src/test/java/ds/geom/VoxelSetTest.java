@@ -34,8 +34,8 @@ public class VoxelSetTest extends GeomTest {
 		for (int i = 0; i < 10; i++) {
 			Point3d o = p();
 			Primitive p = new Sphere(o, p(), false);
-			Point3i c = p.voxelize().centroid();
-			assertThat(c, equalTo(GeomUtil.toPoint3i(o)));
+			Point3d c = p.voxelize().centroid();
+			assertThat(c, equalTo(o));
 		}
 	}
 

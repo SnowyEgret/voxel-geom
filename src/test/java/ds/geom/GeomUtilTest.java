@@ -77,8 +77,8 @@ public class GeomUtilTest extends GeomTest {
 		Primitive sphere = new Sphere(o(), p, false);
 		VoxelSet voxels = sphere.voxelize();
 		voxels = voxels.transform(m);
-		Point3i centroid = voxels.centroid();
-		assertThat(centroid, equalTo(new Point3i(0, 0, 0)));
+		Point3d centroid = voxels.centroid();
+		assertThat(centroid, equalTo(new Point3d(0, 0, 0)));
 	}
 
 	//@Test
@@ -89,10 +89,10 @@ public class GeomUtilTest extends GeomTest {
 
 		Matrix4d m = GeomUtil.newReflectionMatrix(o, new Point3d(-1, 0, 1));
 		voxels = voxels.transform(m);
-		Point3i centroid = voxels.centroid();
-		centroid.add(new Point3i(-10, 0, 0));
+		Point3d centroid = voxels.centroid();
+		centroid.add(new Point3d(-10, 0, 0));
 
-		assertThat("Centroid translated equals centroid", centroid, equalTo(new Point3i((int)o.x, (int)o.y, (int)o.z)));
+		assertThat("Centroid translated equals centroid", centroid, equalTo(o));
 	}
 
 	//@Test

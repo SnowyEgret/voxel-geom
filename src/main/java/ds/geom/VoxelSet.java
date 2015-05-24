@@ -79,17 +79,18 @@ public class VoxelSet implements Iterable<Point3i> {
 		return core;
 	}
 
-	public Point3i centroid() {
+	public Point3d centroid() {
 		double x = 0, y = 0, z = 0;
 		for (Point3i v : voxels) {
-			x += v.x;
-			y += v.y;
-			z += v.z;
+			x += v.x + .5;
+			y += v.y + .5;
+			z += v.z + .5;
 		}
 		int s = voxels.size();
-		Point3d p = new Point3d(x / s, y / s, z / s);
-		// Point3i centroid = new Point3i((int) (x / s), (int) (y / s), (int) (z / s));
-		return GeomUtil.toPoint3i(p);
+		return new Point3d(x / s, y / s, z / s);
+		// Point3i centroid = new Point3i((int) (x / s), (int) (y / s), (int) (z
+		// / s));
+		// return GeomUtil.toPoint3i(p);
 	}
 
 	// Returns a copy
@@ -98,7 +99,8 @@ public class VoxelSet implements Iterable<Point3i> {
 		for (Point3i v : this) {
 			Point3d p = new Point3d(v.x, v.y, v.z);
 			m.transform(p);
-			copy.add(new Point3i((int) Math.round(p.x), (int) Math.round(p.y), (int) Math.round(p.z)));
+			copy.add(new Point3i((int) Math.round(p.x), (int) Math.round(p.y),
+					(int) Math.round(p.z)));
 		}
 		return copy;
 	}
@@ -113,8 +115,10 @@ public class VoxelSet implements Iterable<Point3i> {
 	}
 
 	public IntegerDomain getDomain() {
-		Point3i min = new Point3i(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
-		Point3i max = new Point3i(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE);
+		Point3i min = new Point3i(Integer.MAX_VALUE, Integer.MAX_VALUE,
+				Integer.MAX_VALUE);
+		Point3i max = new Point3i(Integer.MIN_VALUE, Integer.MIN_VALUE,
+				Integer.MIN_VALUE);
 		for (Point3i v : voxels) {
 			min.x = (v.x < min.x) ? v.x : min.x;
 			min.y = (v.y < min.y) ? v.y : min.y;
@@ -160,6 +164,5 @@ public class VoxelSet implements Iterable<Point3i> {
 	public Boolean contains(Point3i p) {
 		return voxels.contains(p);
 	}
-
 
 }
