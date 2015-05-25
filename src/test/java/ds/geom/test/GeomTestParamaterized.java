@@ -28,7 +28,7 @@ public class GeomTestParamaterized {
 	public static Object[][] vectorPoint(int rows) {
 		Object[][] params = new Object[rows][2];
 		for (int i = 0; i < rows; i++) {
-			params[i][0] = g.vector();
+			params[i][0] = g.v();
 			params[i][1] = g.p();
 		}
 		return params;
@@ -103,7 +103,7 @@ public class GeomTestParamaterized {
 		Object[][] params = new Object[rows][columns];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				params[i][j] = g.vector();
+				params[i][j] = g.v();
 			}
 		}
 		return params;

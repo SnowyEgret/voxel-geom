@@ -20,13 +20,24 @@ public class GeomTest {
 
 	Random rand = new Random();
 	protected double scale = 200;
-	protected double epsilon = .000000001;
+	protected double epsilon = .00001;
 
-	protected Point3d p0 = new Point3d(0,0,0);
-	protected Point3d p1 = new Point3d(1,1,1);
-	protected Point3d p2 = new Point3d(2,2,2);
-	protected Point3d p3 = new Point3d(3,3,3);
-	
+	public Point3d p0() {
+		return new Point3d(0, 0, 0);
+	}
+
+	public Point3d p1() {
+		return new Point3d(1, 1, 1);
+	}
+
+	public Point3d p2() {
+		return new Point3d(2, 2, 2);
+	}
+
+	public Point3d p3() {
+		return new Point3d(3, 3, 3);
+	}
+
 	public Point3d p() {
 		return new Point3d(d(), d(), d());
 	}
@@ -43,8 +54,16 @@ public class GeomTest {
 		return new Point3d(x, y, z);
 	}
 
-	public Vector3d vector() {
+	public Point3d p(Point3d p) {
+		return new Point3d(p);
+	}
+
+	public Vector3d v() {
 		return new Vector3d(d(), d(), d());
+	}
+
+	public Vector3d v(Point3d p) {
+		return new Vector3d(p);
 	}
 
 	public InfiniteLine line() {
@@ -106,6 +125,5 @@ public class GeomTest {
 	public Point3d p(double d) {
 		return new Point3d(d, d, d);
 	}
-
 
 }

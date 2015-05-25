@@ -21,7 +21,7 @@ public class ReflectionMatrixTest extends GeomTest {
 
 	@Test
 	public void negate() {
-		Vector3d v1 = new Vector3d(p2);
+		Vector3d v1 = new Vector3d(p2());
 		v1.negate();
 		assertEquals(true, v1.epsilonEquals(new Point3d(-2, -2, -2), epsilon));
 	}

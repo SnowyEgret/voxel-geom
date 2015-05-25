@@ -4,15 +4,23 @@ import javax.vecmath.AxisAngle4d;
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Vector3d;
 
+import ds.geom.GeomUtil;
+
 public class RotationMatrix extends Matrix4d {
 
 	public RotationMatrix(Vector3d v1, Vector3d v2) {
+		// System.out.println("v1=" + v1);
 		setIdentity();
 		double angle = v1.angle(v2);
 		Vector3d axis = new Vector3d();
-		axis.cross(v1, v2);
+		if (Math.abs(angle - Math.PI) < .0000001) {
+			//System.out.println("Vectors are opposite. angle=" + angle);
+			axis = GeomUtil.anyOrthogonalVector(v1);
+		} else {
+			axis.cross(v1, v2);
+		}
 		axis.normalize();
+		// System.out.println(axis);
 		setRotation(new AxisAngle4d(axis, angle));
 	}
-
 }

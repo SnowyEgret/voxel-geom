@@ -17,9 +17,11 @@ public class ScaleMatrixTest extends GeomTest {
 	@Test
 	public void test() {
 		for (int i = 0; i < 100; i++) {
-			Vector3d v = vector();
+			//Two identical random points
 			Point3d p0 = p();
 			Point3d p1 = new Point3d(p0);
+			//A random vector
+			Vector3d v = v();
 			Matrix4d m = new ScaleMatrix(v);
 			m.transform(p1);
 			assertThat(p1.x, closeTo(p0.x * v.x, epsilon));

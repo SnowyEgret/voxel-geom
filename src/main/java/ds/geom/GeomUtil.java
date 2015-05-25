@@ -8,7 +8,8 @@ import javax.vecmath.Vector3d;
 
 public class GeomUtil {
 
-	public static double angleBetweenPoints(Point3d center, Point3d from, Point3d to) {
+	public static double angleBetweenPoints(Point3d center, Point3d from,
+			Point3d to) {
 		Vector3d vFrom = new Vector3d(from);
 		Vector3d vTo = new Vector3d(to);
 		vFrom.sub(center);
@@ -16,7 +17,8 @@ public class GeomUtil {
 		return vFrom.angle(vTo);
 	}
 
-	public static Vector3d normalToPlane(Point3d center, Point3d from, Point3d to) {
+	public static Vector3d normalToPlane(Point3d center, Point3d from,
+			Point3d to) {
 		Vector3d vFrom = new Vector3d(from);
 		Vector3d vTo = new Vector3d(to);
 		vFrom.sub(center);
@@ -27,7 +29,8 @@ public class GeomUtil {
 		return normal;
 	}
 
-	public static Point3d pointOnLineClosestToPoint(Point3d p, Point3d l1, Point3d l2) {
+	public static Point3d pointOnLineClosestToPoint(Point3d p, Point3d l1,
+			Point3d l2) {
 		Vector3d vp = new Vector3d(p);
 		Vector3d vl = new Vector3d(l2);
 		vp.sub(l1);
@@ -39,7 +42,8 @@ public class GeomUtil {
 		return l1;
 	}
 
-	public static double distancePerpendicularFromPointToLine(Point3d p, Point3d l1, Point3d l2) {
+	public static double distancePerpendicularFromPointToLine(Point3d p,
+			Point3d l1, Point3d l2) {
 		Point3d P = GeomUtil.pointOnLineClosestToPoint(p, l1, l2);
 		Vector3d vP = new Vector3d(P);
 		vP.sub(p);
@@ -61,7 +65,8 @@ public class GeomUtil {
 		return m;
 	}
 
-	// Creates a matrix which reflects in either the XY or YZ plane depending largest component
+	// Creates a matrix which reflects in either the XY or YZ plane depending
+	// largest component
 	@Deprecated
 	public static Matrix4d newReflectionMatrix(Point3d centroid, Point3d p) {
 		Vector3d v = new Vector3d();
@@ -81,17 +86,19 @@ public class GeomUtil {
 		}
 		p1.add(centroid);
 		p2.add(centroid);
-		p3.add(centroid);			
+		p3.add(centroid);
 		return newReflectionMatrix(p1, p2, p3);
 	}
 
 	// http://www.moreprocess.com/computer-graphics/reflection-of-a-point-with-respect-to-an-arbitrary-plane-in-3d
 	// http://onyx.boisestate.edu/~tcole/cs496/java3d/demo/ch7/composition/Mirror.java
 	@Deprecated
-	public static Matrix4d newReflectionMatrix(Point3d p1, Point3d p2, Point3d p3) {
+	public static Matrix4d newReflectionMatrix(Point3d p1, Point3d p2,
+			Point3d p3) {
 
 		Matrix4d mT = newTranslationMatrix(new Vector3d(p1));
-		Matrix4d mR = newRotationMatrix(new Vector3d(0, 0, 1), normalToPlane(p1, p2, p3));
+		Matrix4d mR = newRotationMatrix(new Vector3d(0, 0, 1),
+				normalToPlane(p1, p2, p3));
 
 		Matrix4d m = new Matrix4d();
 		m.setIdentity();
@@ -119,8 +126,10 @@ public class GeomUtil {
 	}
 
 	@Deprecated
-	public static Matrix4d newScaleMatrix(Point3d origin, Point3d from, Point3d to) {
-		throw new UnsupportedOperationException("Method 'GeomUtil.newScaleMatrix' not yet implemented");
+	public static Matrix4d newScaleMatrix(Point3d origin, Point3d from,
+			Point3d to) {
+		throw new UnsupportedOperationException(
+				"Method 'GeomUtil.newScaleMatrix' not yet implemented");
 	}
 
 	@Deprecated
@@ -179,7 +188,8 @@ public class GeomUtil {
 	}
 
 	@Deprecated
-	public static Matrix4d newRotationMatrix(Point3d center, Point3d from, Point3d to) {
+	public static Matrix4d newRotationMatrix(Point3d center, Point3d from,
+			Point3d to) {
 
 		Matrix4d mR = new Matrix4d();
 		mR.setIdentity();
@@ -203,11 +213,31 @@ public class GeomUtil {
 	}
 
 	public static Point3i toPoint3i(Point3d p) {
-		return new Point3i((int) Math.round(p.x), (int) Math.round(p.y), (int) Math.round(p.z));
+		return new Point3i((int) Math.round(p.x), (int) Math.round(p.y),
+				(int) Math.round(p.z));
 	}
 
 	public static Point3d toPoint3d(Point3i p) {
 		return new Point3d(p.x, p.y, p.z);
+	}
+
+	public static Vector3d anyOrthogonalVector(Vector3d vectorIn) {
+		Vector3d unitZ = new Vector3d(0, 0, 1);
+		//Pick any vector in the xy plane
+		Vector3d orthogonalVector = new Vector3d(1, 0, 0);
+		double angle = vectorIn.angle(unitZ);
+		// Matrix will contain NaN values if angle is PI because cross product will be 0
+		if (Math.abs(angle - Math.PI) < .0000001) {
+			return orthogonalVector;
+		}
+		Matrix4d m = new Matrix4d();
+		m.setIdentity();
+		Vector3d axis = new Vector3d();
+		axis.cross(vectorIn, unitZ);
+		m.setRotation(new AxisAngle4d(axis, angle));
+		m.invert();
+		m.transform(orthogonalVector);
+		return orthogonalVector;
 	}
 
 }

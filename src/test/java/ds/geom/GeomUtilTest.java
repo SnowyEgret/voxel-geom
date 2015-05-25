@@ -141,4 +141,19 @@ public class GeomUtilTest extends GeomTest {
 		}
 	}
 
+	@Test
+	public void anyOrthogonalVector() {
+		Vector3d v1 = v();
+		Vector3d v2 = GeomUtil.anyOrthogonalVector(v1);
+		//System.out.println("v2="+v2);
+		//The dot product of two orthononal vectors is 0
+		assertThat(v1.dot(v2), closeTo(0, epsilon));
+	}
+
+	@Test
+	public void anyOrthogonalVectorNegUnitZ() {
+		Vector3d v1 = new Vector3d(0,0,-1);
+		Vector3d v2 = GeomUtil.anyOrthogonalVector(v1);
+		assertThat(v1.dot(v2), closeTo(0, epsilon));
+	}
 }
