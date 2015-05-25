@@ -17,10 +17,10 @@ public class ScaleMatrixTest extends GeomTest {
 	@Test
 	public void test() {
 		for (int i = 0; i < 100; i++) {
-			//Two identical random points
+			// Two identical random points
 			Point3d p0 = p();
-			Point3d p1 = new Point3d(p0);
-			//A random vector
+			Point3d p1 = p(p0);
+			// A random vector
 			Vector3d v = v();
 			Matrix4d m = new ScaleMatrix(v);
 			m.transform(p1);

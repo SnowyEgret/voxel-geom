@@ -4,6 +4,7 @@ import static ds.geom.test.CloseToTuple3d.closeToTuple3d;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertTrue;
 
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Point3d;
@@ -16,7 +17,7 @@ import ds.geom.surface.Sphere;
 import ds.geom.test.GeomTest;
 
 public class GeomUtilTest extends GeomTest {
-	
+
 	double epsilon = .000001;
 
 	@Test
@@ -24,7 +25,8 @@ public class GeomUtilTest extends GeomTest {
 		Point3d center = new Point3d(1, 0, 0);
 		Point3d from = new Point3d(9, 0, 0);
 		Point3d to = new Point3d(1, 6, 0);
-		assertThat(GeomUtil.angleBetweenPoints(center, from, to), closeTo(Math.PI / 2, epsilon));
+		assertThat(GeomUtil.angleBetweenPoints(center, from, to),
+				closeTo(Math.PI / 2, epsilon));
 	}
 
 	@Test
@@ -32,7 +34,8 @@ public class GeomUtilTest extends GeomTest {
 		Point3d center = new Point3d(1, 0, 0);
 		Point3d from = new Point3d(9, 0, 0);
 		Point3d to = new Point3d(1, 6, 0);
-		assertThat(GeomUtil.normalToPlane(center, from, to), equalTo(new Vector3d(0, 0, 1)));
+		assertThat(GeomUtil.normalToPlane(center, from, to),
+				equalTo(new Vector3d(0, 0, 1)));
 	}
 
 	@Test
@@ -40,7 +43,8 @@ public class GeomUtilTest extends GeomTest {
 		Point3d p = new Point3d(3, 2, 0);
 		Point3d l1 = new Point3d(1, 0, 0);
 		Point3d l2 = new Point3d(3, 0, 0);
-		assertThat(GeomUtil.pointOnLineClosestToPoint(p, l1, l2), closeToTuple3d(new Point3d(3, 0, 0)));
+		assertThat(GeomUtil.pointOnLineClosestToPoint(p, l1, l2),
+				closeToTuple3d(new Point3d(3, 0, 0)));
 	}
 
 	@Test
@@ -48,7 +52,8 @@ public class GeomUtilTest extends GeomTest {
 		Point3d p = new Point3d(3, 2, 0);
 		Point3d l1 = new Point3d(1, 0, 0);
 		Point3d l2 = new Point3d(3, 0, 0);
-		assertThat(GeomUtil.distancePerpendicularFromPointToLine(p, l1, l2), equalTo(2d));
+		assertThat(GeomUtil.distancePerpendicularFromPointToLine(p, l1, l2),
+				equalTo(2d));
 	}
 
 	@Test
@@ -61,7 +66,7 @@ public class GeomUtilTest extends GeomTest {
 		assertThat(p, closeToTuple3d(new Point3d(1, 1, 1)));
 	}
 
-	//@Test
+	// @Test
 	public void newReflectionMatrix_PointPointPoint() {
 
 		Point3d p1 = new Point3d(0, 2, 0);
@@ -72,7 +77,7 @@ public class GeomUtilTest extends GeomTest {
 		Point3d p = new Point3d(0, 4, 0);
 		m.transform(p);
 		assertThat(p, closeToTuple3d(new Point3d(0, 0, 0)));
-		
+
 		p = new Point3d(0, 4, 0);
 		Primitive sphere = new Sphere(o(), p, false);
 		VoxelSet voxels = sphere.voxelize();
@@ -81,7 +86,7 @@ public class GeomUtilTest extends GeomTest {
 		assertThat(centroid, equalTo(new Point3d(0, 0, 0)));
 	}
 
-	//@Test
+	// @Test
 	public void newReflectionMatrix_PointPoint() {
 		Point3d o = new Point3d(4, 0, 0);
 		Primitive sphere = new Sphere(o, p(), false);
@@ -95,7 +100,7 @@ public class GeomUtilTest extends GeomTest {
 		assertThat("Centroid translated equals centroid", centroid, equalTo(o));
 	}
 
-	//@Test
+	// @Test
 	public void newRotationMatrixCenterFromTo() {
 
 		Point3d center = new Point3d(0, 0, 0);
@@ -135,7 +140,7 @@ public class GeomUtilTest extends GeomTest {
 
 	@Test
 	public void toPoint3i() {
-		for (int i = 0; i <100; i++) {
+		for (int i = 0; i < 100; i++) {
 			Point3d p = p();
 			assertThat(GeomUtil.toPoint3d(GeomUtil.toPoint3i(p)), equalTo(p));
 		}
@@ -145,15 +150,47 @@ public class GeomUtilTest extends GeomTest {
 	public void anyOrthogonalVector() {
 		Vector3d v1 = v();
 		Vector3d v2 = GeomUtil.anyOrthogonalVector(v1);
-		//System.out.println("v2="+v2);
-		//The dot product of two orthononal vectors is 0
+		// System.out.println("v2="+v2);
+		// The dot product of two orthononal vectors is 0
 		assertThat(v1.dot(v2), closeTo(0, epsilon));
 	}
 
 	@Test
 	public void anyOrthogonalVectorNegUnitZ() {
-		Vector3d v1 = new Vector3d(0,0,-1);
+		Vector3d v1 = new Vector3d(0, 0, -1);
 		Vector3d v2 = GeomUtil.anyOrthogonalVector(v1);
 		assertThat(v1.dot(v2), closeTo(0, epsilon));
 	}
+
+	@Test
+	public void reflectRandom() {
+		//for (int i = 0; i < 100; i++) {
+			Point3d p = p();
+			Point3d p1 = p();
+			Point3d p2 = p();
+			Point3d p3 = p();
+			boolean debug = true;
+			Point3d pBegin = p(p);
+			GeomUtil.reflect(p, p1, p2, p3, debug);
+			Point3d pEnd = GeomUtil.reflect(p, p1, p2, p3, debug);
+			assertTrue(pEnd.epsilonEquals(pBegin, .0001));
+		//}
+	}
+
+	// @Test
+	public void reflect() {
+		Point3d p = p(1, 1, 0);
+		Point3d p1 = p(0, 0, 0);
+		Point3d p2 = p(0, 0, 1);
+		Point3d p3 = p(0, 1, 0);
+		boolean debug = true;
+		Point3d pBeg = p(p);
+		GeomUtil.reflect(p, p1, p2, p3, debug);
+		Point3d pEnd = GeomUtil.reflect(p, p1, p2, p3, debug);
+		System.out.println();
+		System.out.println("pBeg=" + GeomUtil.toPoint3i(pBeg));
+		System.out.println("pEnd=" + GeomUtil.toPoint3i(pEnd));
+		assertTrue(pEnd.epsilonEquals(pBeg, .0001));
+	}
+
 }

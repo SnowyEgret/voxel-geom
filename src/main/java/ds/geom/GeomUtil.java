@@ -6,6 +6,10 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Point3i;
 import javax.vecmath.Vector3d;
 
+import ds.geom.matrix.RotationMatrix;
+import ds.geom.matrix.ScaleMatrix;
+import ds.geom.matrix.TranslationMatrix;
+
 public class GeomUtil {
 
 	public static double angleBetweenPoints(Point3d center, Point3d from,
@@ -227,7 +231,7 @@ public class GeomUtil {
 		Vector3d orthogonalVector = new Vector3d(1, 0, 0);
 		double angle = vectorIn.angle(unitZ);
 		// Matrix will contain NaN values if angle is PI because cross product will be 0
-		if (Math.abs(angle - Math.PI) < .0000001) {
+		if (Math.abs(angle - Math.PI) < .0000001 || Math.abs(angle - 0) < .0000001) {
 			return orthogonalVector;
 		}
 		Matrix4d m = new Matrix4d();
@@ -239,5 +243,39 @@ public class GeomUtil {
 		m.transform(orthogonalVector);
 		return orthogonalVector;
 	}
+
+	public static Point3d reflect(Point3d p, Point3d pointOnPlane1,
+			Point3d pointOnPlane2, Point3d pointOnPlane3, boolean debug) {
+		
+		//Construct a translation matrix which translates the reflection plane so that it intersects origin
+		Vector3d v = new Vector3d(pointOnPlane1);
+		v.negate();
+		TranslationMatrix mt = new TranslationMatrix(v);
+
+		//Construct a rotation matrix which rotates the reflection plane into the xy plane
+		RotationMatrix mr = new RotationMatrix(new Vector3d(0, 0, 1),
+				GeomUtil.normalToPlane(pointOnPlane1, pointOnPlane2, pointOnPlane3));
+
+		//Construct a scaling matrix which reverses the sign of the point's z coordinate
+		ScaleMatrix ms = new ScaleMatrix(new Vector3d(1, 1, -1));
+
+		if (debug) System.out.println();
+		if (debug) System.out.println(toPoint3i(p));
+		mt.transform(p);
+		if (debug) System.out.println(toPoint3i(p));
+		mr.transform(p);
+		if (debug) System.out.println(toPoint3i(p));
+		//ms.transform(p);
+		p.z = -p.z;
+		if (debug) System.out.println(toPoint3i(p));
+		mr.invert();
+		mr.transform(p);
+		if (debug) System.out.println(toPoint3i(p));
+		mt.invert();
+		mt.transform(p);
+		if (debug) System.out.println(toPoint3i(p));
+		return p;
+	}
+
 
 }

@@ -27,7 +27,7 @@ public class ReflectionMatrix extends Matrix4d {
 		setIdentity();
 		mul(mt);
 		mul(mr);
-		mul(new ScaleMatrix(new Vector3d(0, 0, -1)));
+		mul(new ScaleMatrix(new Vector3d(1, 1, -1)));
 		mr.invert();
 		mul(mr);
 		mt.invert();
