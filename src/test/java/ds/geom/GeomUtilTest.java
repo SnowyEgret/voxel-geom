@@ -164,7 +164,7 @@ public class GeomUtilTest extends GeomTest {
 
 	@Test
 	public void reflectRandom() {
-		//for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 100; i++) {
 			Point3d p = p();
 			Point3d p1 = p();
 			Point3d p2 = p();
@@ -174,10 +174,10 @@ public class GeomUtilTest extends GeomTest {
 			GeomUtil.reflect(p, p1, p2, p3, debug);
 			Point3d pEnd = GeomUtil.reflect(p, p1, p2, p3, debug);
 			assertTrue(pEnd.epsilonEquals(pBegin, .0001));
-		//}
+		}
 	}
 
-	// @Test
+	 @Test
 	public void reflect() {
 		Point3d p = p(1, 1, 0);
 		Point3d p1 = p(0, 0, 0);

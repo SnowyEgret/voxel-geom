@@ -265,8 +265,8 @@ public class GeomUtil {
 		if (debug) System.out.println(toPoint3i(p));
 		mr.transform(p);
 		if (debug) System.out.println(toPoint3i(p));
-		//ms.transform(p);
-		p.z = -p.z;
+		ms.transform(p);
+		//p.z = -p.z;
 		if (debug) System.out.println(toPoint3i(p));
 		mr.invert();
 		mr.transform(p);

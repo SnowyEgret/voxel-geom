@@ -1,16 +1,12 @@
 package ds.geom.matrix;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
 
 import org.junit.Test;
 
-import ds.geom.GeomUtil;
 import ds.geom.test.GeomTest;
 
 public class ReflectionMatrixTest extends GeomTest {
@@ -21,7 +17,7 @@ public class ReflectionMatrixTest extends GeomTest {
 	}
 
 	@Test
-	public void test() {
+	public void twiceBackToStart() {
 		for (int i = 0; i < 100; i++) {
 			//System.out.println(i);
 			Matrix4d m = new ReflectionMatrix(p(), p(), p());
@@ -33,8 +29,8 @@ public class ReflectionMatrixTest extends GeomTest {
 		}
 	}
 
-	// @Test
-	public void trivialWithReflectionMatrix() {
+	@Test
+	public void trivial() {
 		Point3d p = p(2, 0, 0);
 		// Point3d p0 = p(p);
 
