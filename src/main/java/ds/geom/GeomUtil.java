@@ -249,7 +249,7 @@ public class GeomUtil {
 		
 		//Construct a translation matrix which translates the reflection plane so that it intersects origin
 		Vector3d v = new Vector3d(pointOnPlane1);
-		//v.negate();
+		v.negate();
 		TranslationMatrix mt = new TranslationMatrix(v);
 
 		//Construct a rotation matrix which rotates the reflection plane into the xy plane
