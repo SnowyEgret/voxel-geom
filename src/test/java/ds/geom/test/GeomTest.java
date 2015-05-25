@@ -50,6 +50,10 @@ public class GeomTest {
 		return new Point3i(n, n, n);
 	}
 
+	public Point3i p3i(Point3d p) {
+		return new Point3i((int)p.x, (int)p.y, (int)p.z);
+	}
+
 	public Point3d p(int x, int y, int z) {
 		return new Point3d(x, y, z);
 	}

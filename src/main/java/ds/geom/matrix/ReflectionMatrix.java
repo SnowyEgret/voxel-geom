@@ -18,21 +18,19 @@ public class ReflectionMatrix extends Matrix4d {
 	//Rotate the reflection plane back
 	public ReflectionMatrix(Point3d p1, Point3d p2, Point3d p3) {
 		
-		Matrix4d mR = new RotationMatrix(new Vector3d(0, 0, 1), GeomUtil.normalToPlane(p1, p2, p3));
-		Matrix4d mRi = new RotationMatrix(GeomUtil.normalToPlane(p1, p2, p3), new Vector3d(0, 0, 1));
-		//mR.invert();
-
 		Vector3d v = new Vector3d(p1);
-		Matrix4d mTi = new TranslationMatrix(v);
 		v.negate();
-		Matrix4d mT = new TranslationMatrix(v);
+		Matrix4d mt = new TranslationMatrix(v);
 		
+		Matrix4d mr = new RotationMatrix(new Vector3d(0, 0, 1), GeomUtil.normalToPlane(p1, p2, p3));
+
 		setIdentity();
-		mul(mT);
-		mul(mR);
+		mul(mt);
+		mul(mr);
 		mul(new ScaleMatrix(new Vector3d(0, 0, -1)));
-		mul(mTi);
-		mul(mRi);
-		mul(mTi);
+		mr.invert();
+		mul(mr);
+		mt.invert();
+		mul(mt);
 	}
 }
