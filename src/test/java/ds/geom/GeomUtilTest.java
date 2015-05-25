@@ -151,7 +151,7 @@ public class GeomUtilTest extends GeomTest {
 		Vector3d v1 = v();
 		Vector3d v2 = GeomUtil.anyOrthogonalVector(v1);
 		// System.out.println("v2="+v2);
-		// The dot product of two orthononal vectors is 0
+		// The dot product of two orthogonal vectors is 0
 		assertThat(v1.dot(v2), closeTo(0, epsilon));
 	}
 
