@@ -70,6 +70,10 @@ public class GeomTest {
 		return new Vector3d(p);
 	}
 
+	public Vector3d v(double x, double y, double z) {
+		return new Vector3d(x, y, z);
+	}
+
 	public InfiniteLine line() {
 		return new InfiniteLine(p(), p());
 	}

@@ -12,8 +12,16 @@ import ds.geom.test.GeomTest;
 public class ReflectionMatrixTest extends GeomTest {
 
 	@Test
-	public void constructor() {
+	public void constructorPointPointPoint() {
 		new ReflectionMatrix(p(), p(), p());
+	}
+
+	@Test
+	public void constructorPointDirection() {
+		Matrix4d mr = new ReflectionMatrix(p0(), v(1,0,0));
+		Point3d p = p(2, 0, 0);
+		mr.transform(p);
+		assertTrue(p.epsilonEquals(p(-2,0,0), epsilon));
 	}
 
 	@Test
