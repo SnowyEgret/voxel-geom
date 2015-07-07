@@ -14,7 +14,7 @@ public class RotationMatrix extends Matrix4d {
 		double angle = v1.angle(v2);
 		Vector3d axis = new Vector3d();
 		if (Math.abs(angle - Math.PI) < .0000001 || Math.abs(angle - 0) < .0000001) {
-			System.out.println("[RotationMatrix] Vectors are parallel. angle=" + angle);
+			//System.out.println("[RotationMatrix] Vectors are parallel. angle=" + angle);
 			axis = GeomUtil.anyOrthogonalVector(v1);
 		} else {
 			axis.cross(v1, v2);
